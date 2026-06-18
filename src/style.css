@@ -1,148 +1,97 @@
 @import "tailwindcss";
 
 :root {
-  --dk:#0c0a08;--sf:#121009;--cd:#17140f;--ch:#1d1a13;
-  --b0:rgba(255,255,255,.05);--bg:rgba(184,154,106,.18);
-  --gd:#b89a6a;--gl:#d4b27e;--cr:#ede8d8;--c2:#9e9282;--mu:#605a50;--m2:#3a3528;
-  --gn:#5a8a66;--ga:rgba(90,138,102,.1);
-  --rd:#9a5848;--ra:rgba(154,88,72,.1);
-  --ab:#c4884a;--aa:rgba(196,136,74,.1);
-  --bl:#5a7a9a;--ba:rgba(90,122,154,.1);
-  --r:13px;--T:.28s cubic-bezier(.25,.46,.45,.94);
+  --sd-bg: #13110e;      /* Deep obsidian sand */
+  --sd-surface: #1a1714; /* Warm charcoal clay */
+  --sd-panel: #221e1a;   /* Raised structural element */
+  --sd-gold: #a89474;    /* Premium Son Daven gold */
+  --sd-gold-dim: rgba(168, 148, 116, 0.15);
+  --sd-txt: #f4f1eb;     /* Soft warm white */
+  --sd-muted: #8a8174;   /* Earth stone metadata */
+  --sd-border: rgba(168, 148, 116, 0.12);
+  --sd-curve: 0px;       /* Sharp, brutalist architectural corners matching Sondaven luxury style */
 }
 
-body, html {
-  background-color: var(--dk) !important;
-  color: var(--cr) !important;
-  margin: 0;
-  padding: 0;
-}
-
-/* ─────────────────────────────────────────────────────────── */
-/* 💎 GLOBAL COMPONENT UI KIT                                  */
-/* ─────────────────────────────────────────────────────────── */
-
-/* Typography */
-.mtitle {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 28px;
-  font-weight: 300;
-  color: var(--cr);
-  letter-spacing: -0.5px;
-}
-
-.mlbl {
-  display: block;
-  font-size: 10.5px;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--mu);
-  margin-bottom: 6px;
-}
-
-/* Base Modal Container */
-.mbody {
-  background: var(--cd);
+body {
+  background-color: var(--sd-bg);
+  color: var(--sd-txt);
   font-family: 'DM Sans', system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* Luxury Headings */
+.sd-serif {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  letter-spacing: -0.03em;
+}
+
+/* Microinteractions & Tactile Hover States */
+.sd-interactive-card {
+  background: var(--sd-surface);
+  border: 1px solid var(--sd-border);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.sd-interactive-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--sd-gold);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 0;
+}
+
+.sd-interactive-card:hover::before {
+  opacity: 0.03;
+}
+
+.sd-interactive-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--sd-gold);
+}
+
+/* Tactile Sondaven Action Button */
+.sd-btn {
+  background: transparent;
+  border: 1px solid var(--sd-gold);
+  color: var(--sd-txt);
+  padding: 12px 28px;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
 }
 
-.mbody::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gd), transparent);
+.sd-btn.fill {
+  background: var(--sd-gold);
+  color: var(--sd-bg);
 }
 
-/* Inputs & Selects */
-.minp {
+.sd-btn:hover {
+  letter-spacing: 0.18em;
+  background: var(--sd-txt);
+  color: var(--sd-bg);
+  border-color: var(--sd-txt);
+}
+
+/* Clean Form Inputs */
+.sd-input {
   width: 100%;
-  padding: 11px 14px;
-  background: #110f0a;
-  border: 1px solid var(--b0);
-  border-radius: 8px;
-  color: var(--cr);
-  font-size: 13px;
+  background: var(--sd-surface);
+  border: 1px solid var(--sd-border);
+  padding: 14px;
+  color: var(--sd-txt);
   outline: none;
-  transition: border-color var(--T), background var(--T);
+  font-size: 14px;
+  transition: border-color 0.25s ease;
 }
-
-.minp:focus {
-  border-color: rgba(184, 154, 106, 0.3);
-  background: var(--ch);
-}
-
-.msel {
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23605a50' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  padding-right: 36px;
-}
-
-/* Interactive Pill Badges */
-.mpill {
-  padding: 5px 14px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: var(--T);
-  border: 1px solid transparent;
-  background: rgba(255, 255, 255, 0.02);
-  opacity: 0.45;
-}
-
-.mpill:hover {
-  opacity: 0.8;
-  transform: translateY(-1px);
-}
-
-/* Badge Color Modifiers */
-.be { color: #70b882; }
-.bm { color: var(--ab); }
-.bh { color: #d07060; }
-
-.mpill.be.active-pill { background: rgba(90, 138, 102, 0.15); color: #70b882; border-color: rgba(90, 138, 102, 0.3); opacity: 1; }
-.mpill.bm.active-pill { background: rgba(196, 136, 74, 0.15); color: var(--ab); border-color: rgba(196, 136, 74, 0.3); opacity: 1; }
-.mpill.bh.active-pill { background: rgba(154, 88, 72, 0.15); color: #d07060; border-color: rgba(154, 88, 72, 0.3); opacity: 1; }
-
-/* Buttons */
-.mbtn {
-  flex: 1;
-  padding: 11px;
-  border-radius: 10px;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  cursor: pointer;
-  transition: var(--T);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'DM Sans', sans-serif;
-}
-
-.mbtn.secondary {
-  border: 1px solid var(--b0);
-  background: transparent;
-  color: var(--mu);
-}
-.mbtn.secondary:hover { background: rgba(255,255,255,0.02); color: var(--c2); }
-
-.mbtn.primary {
-  border: 1px solid rgba(184, 154, 106, 0.2);
-  background: rgba(184, 154, 106, 0.07);
-  color: var(--gd);
-}
-.mbtn.primary:hover { background: rgba(184, 154, 106, 0.14); transform: translateY(-1px); }
-.mbtn:active { transform: scale(0.98); }
-
-/* Global Fade In Animation */
-.mfade {
-  animation: fIn 0.25s ease-out forwards;
-}
-@keyframes fIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.sd-input:focus {
+  border-color: var(--sd-gold);
 }
