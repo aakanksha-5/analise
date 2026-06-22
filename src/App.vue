@@ -38,7 +38,7 @@
           ANALISE <span class="text-[9px] font-sans tracking-[0.2em] text-[var(--sd-muted)] block uppercase font-bold mt-1">Flashcard Engine</span>
         </h1>
         <div class="text-[10px] tracking-widest text-[var(--sd-muted)] uppercase font-semibold hidden md:block">
-          Modern Ethnic Study System // 2026
+          Modern Study System // 2026
         </div>
       </nav>
 
@@ -54,8 +54,8 @@
               Master your <em class="italic text-[var(--sd-gold)]">Interviews.</em>
             </h2>
             <p class="text-[var(--sd-muted)] text-sm md:text-base leading-relaxed max-w-lg">
-              A minimalist workspace leveraging targeted tracking intervals to build permanent comprehension paths. 
-              Build collections, commit core concepts, and run daily evaluation cycles.
+              A minimalist flashcard platform built to help you prepare for any interview. 
+              Organize key concepts, manage custom decks, and review critical material to build confidence and sharp communication.
             </p>
           </div>
 

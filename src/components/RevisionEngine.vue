@@ -30,7 +30,7 @@
 
         <div v-else class="mt-8 text-center">
           <button @click="revealed = true" class="w-full py-4 border border-dashed border-[var(--sd-border)] text-xs uppercase tracking-widest text-[var(--sd-muted)] hover:text-[var(--sd-gold)] hover:border-[var(--sd-gold)] transition">
-            Reveal Hidden Verification Answer
+            Reveal Answer
           </button>
         </div>
       </div>

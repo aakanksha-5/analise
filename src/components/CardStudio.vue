@@ -6,10 +6,10 @@
     <div class="bg-[var(--sd-surface)] border border-[var(--sd-border)] hover:border-[var(--sd-gold)] transition-colors duration-300 p-8 mb-8">
       <h3 class="sd-serif text-2xl mb-6">{{ editingCardId ? 'Modify Concept' : 'Add New Flashcard Element' }}</h3>
       <form @submit.prevent="saveCard" class="space-y-4">
-        <input v-model="form.question" required class="sd-input" placeholder="Question or Code Snippet Front...">
-        <textarea v-model="form.answer" required class="sd-input h-28" placeholder="Answer Breakdown Details..."></textarea>
+        <input v-model="form.question" required class="sd-input" placeholder="Question">
+        <textarea v-model="form.answer" required class="sd-input h-28" placeholder="Answer"></textarea>
         <div class="grid grid-cols-2 gap-4">
-          <input v-model="form.topic" required class="sd-input" placeholder="Topic Tag (e.g. Arrays)">
+          <input v-model="form.topic" required class="sd-input" placeholder="Topic (e.g. Arrays)">
           <select v-model="form.difficulty" class="sd-input">
             <option>Easy</option>
             <option>Medium</option>
@@ -17,14 +17,14 @@
           </select>
         </div>
         <div class="flex gap-4 pt-4">
-          <button type="submit" class="sd-btn fill">{{ editingCardId ? 'Save Edits' : 'Commit Card' }}</button>
+          <button type="submit" class="sd-btn fill">{{ editingCardId ? 'Save Edits' : 'Add Card' }}</button>
           <button type="button" @click="resetForm" class="sd-btn">Cancel</button>
         </div>
       </form>
     </div>
 
     <!-- Active List -->
-    <h4 class="sd-serif text-xl mb-4">Deck Catalog Structure ({{ deck.cards.length }})</h4>
+    <h4 class="sd-serif text-xl mb-4">Questions List ({{ deck.cards.length }})</h4>
     <div class="space-y-3">
       <!-- INDIVIDUAL CARDS (Keep the lighter background + border hover effect) -->
       <div v-for="card in deck.cards" :key="card.id" class="sd-inner-card p-6 flex justify-between items-center">
