@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --sd-bg: #13110e;      /* Deep obsidian sand */
-  --sd-surface: #1a1714; /* Warm charcoal clay */
-  --sd-panel: #221e1a;   /* Raised structural element */
-  --sd-gold: #a89474;    /* Premium Son Daven gold */
+  --sd-bg: #13110e;      
+  --sd-surface: #1a1714; /* RESTORED: Original darker charcoal for forms/panels */
+  --sd-panel: #221e1a;   
+  --sd-gold: #a89474;    
   --sd-gold-dim: rgba(168, 148, 116, 0.15);
-  --sd-txt: #f4f1eb;     /* Soft warm white */
-  --sd-muted: #8a8174;   /* Earth stone metadata */
+  --sd-txt: #f4f1eb;     
+  --sd-muted: #8a8174;   
   --sd-border: rgba(168, 148, 116, 0.12);
-  --sd-curve: 0px;       /* Sharp, brutalist architectural corners matching Sondaven luxury style */
+  --sd-curve: 0px;       
 }
 
 body {
@@ -19,17 +19,16 @@ body {
   letter-spacing: -0.01em;
 }
 
-/* Luxury Headings */
 .sd-serif {
   font-family: 'Cormorant Garamond', serif;
   font-weight: 300;
   letter-spacing: -0.03em;
 }
 
-/* Microinteractions & Tactile Hover States */
+/* DECK CARDS ONLY: Lighter specific background colors */
 .sd-interactive-card {
-  background: var(--sd-surface);
-  border: 1px solid var(--sd-border);
+  background: #26221d; /* Lighter clay for decks */
+  border: 1px solid rgba(168, 148, 116, 0.2);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
@@ -52,9 +51,22 @@ body {
 .sd-interactive-card:hover {
   transform: translateY(-4px);
   border-color: var(--sd-gold);
+  background: #2e2924; /* Brightens further on hover */
 }
 
-/* Tactile Sondaven Action Button */
+/* For inner forms and catalog lists (Color shift, no vertical lift) */
+.sd-inner-card {
+  background: var(--sd-surface);
+  border: 1px solid var(--sd-border);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sd-inner-card:hover {
+  border-color: var(--sd-gold);
+  background: #2e2924; /* Warm lighter hover matching the deck cards */
+}
+
+/* Buttons and Inputs remain unchanged */
 .sd-btn {
   background: transparent;
   border: 1px solid var(--sd-gold);
@@ -81,7 +93,6 @@ body {
   border-color: var(--sd-txt);
 }
 
-/* Clean Form Inputs */
 .sd-input {
   width: 100%;
   background: var(--sd-surface);

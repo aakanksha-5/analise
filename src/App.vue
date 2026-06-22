@@ -2,10 +2,9 @@
   <div class="min-h-screen text-[var(--sd-txt)] relative">
     
     <!-- 1. SONDAVEN-STYLE HERO SPLASH -->
-    <!-- Changed from 'sticky' to 'fixed inset-0' so it locks to the window background -->
-    <div v-if="currentView === 'home'" class="h-screen w-full flex flex-col items-center justify-center fixed inset-0 -z-10 overflow-hidden bg-[var(--sd-bg)]">
+    <!-- Restored to justify-center and massive text -->
+    <div v-if="currentView === 'home' && !hasSeenIntro" class="h-screen w-full flex flex-col items-center justify-center fixed inset-0 -z-10 overflow-hidden bg-[var(--sd-bg)]">
       
-      <!-- Massive Typography with Scroll Parallax Binding -->
       <h1 
         class="sd-serif text-[18vw] leading-none tracking-tighter flex items-center z-10"
         :style="{ 
@@ -14,10 +13,9 @@
         }"
       >
         <span class="text-[var(--sd-txt)]">ANA</span>
-        <em class="italic text-[var(--sd-gold)] pr-4">LISE.</em>
+        <em class="italic text-[var(--sd-gold)] pr-4">LISE</em>
       </h1>
 
-      <!-- Minimalist Scroll Indicator -->
       <div 
         class="absolute bottom-12 flex flex-col items-center gap-4 transition-opacity duration-300"
         :style="{ opacity: 1 - scrollY / 200 }"
@@ -28,11 +26,10 @@
     </div>
 
     <!-- 2. MAIN APPLICATION WORKSPACE -->
-    <!-- Added a dynamic class binding: `mt-[100vh]` pushes this entire block below the hero screen -->
     <main 
       :class="[
         'bg-[var(--sd-bg)] z-10 relative px-6 py-12 md:px-16 lg:px-24 min-h-screen animate-fade shadow-[0_-20px_50px_rgba(19,17,14,1)]',
-        currentView === 'home' ? 'mt-[100vh]' : 'mt-0'
+        (currentView === 'home' && !hasSeenIntro) ? 'mt-[100vh]' : 'mt-0'
       ]"
     >
       <!-- Navigation Branding Strip -->
@@ -50,7 +47,9 @@
         
         <!-- HOME DECK SELECTION HUB -->
         <div v-if="currentView === 'home'">
-          <div class="max-w-2xl mb-14">
+          
+          <!-- Clean text intro without animation -->
+          <div class="max-w-2xl mb-14 mt-4">
             <h2 class="sd-serif text-4xl md:text-5xl text-[var(--sd-txt)] leading-tight mb-6">
               Master your <em class="italic text-[var(--sd-gold)]">Interviews.</em>
             </h2>
@@ -59,13 +58,12 @@
               Build collections, commit core concepts, and run daily evaluation cycles.
             </p>
           </div>
+
           <DeckGrid @select-deck="routeToView" />
         </div>
 
-        <!-- MANAGE INDIVIDUAL DECK CARD CATALOG -->
         <CardStudio v-else-if="currentView === 'manage'" :deckId="activeDeckId" @go-home="routeToView({ deckId: null, mode: 'home' })" />
 
-        <!-- ACTIVE SPACED REPETITION STUDY RUNNER -->
         <RevisionEngine v-else-if="currentView === 'study'" :deckId="activeDeckId" @exit="routeToView({ deckId: null, mode: 'home' })" />
       
       </div>
@@ -74,7 +72,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import DeckGrid from './components/DeckGrid.vue'
 import CardStudio from './components/CardStudio.vue'
 import RevisionEngine from './components/RevisionEngine.vue'
@@ -82,12 +80,22 @@ import RevisionEngine from './components/RevisionEngine.vue'
 // -- Routing State --
 const currentView = ref('home')
 const activeDeckId = ref(null)
+const hasSeenIntro = ref(false)
 
 function routeToView({ deckId, mode }) {
   activeDeckId.value = deckId
   currentView.value = mode
-  // Scroll to top of the workspace when changing views
-  window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })
+  
+  if (mode !== 'home') {
+    // Hide massive intro permanently once navigating into a deck
+    hasSeenIntro.value = true 
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  } else {
+    // Return home exactly to top
+    nextTick(() => {
+      window.scrollTo({ top: 0, behavior: 'instant' })
+    })
+  }
 }
 
 // -- Parallax Scroll Logic --
@@ -107,7 +115,6 @@ onUnmounted(() => {
 </script>
 
 <style>
-/* Micro fade translation animation wrapper */
 .animate-fade {
   animation: sdFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -115,10 +122,5 @@ onUnmounted(() => {
 @keyframes sdFade {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-/* Ensure smooth scrolling across the entire document */
-html {
-  scroll-behavior: smooth;
 }
 </style>

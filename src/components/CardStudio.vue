@@ -2,7 +2,8 @@
   <div class="max-w-4xl mx-auto">
     <button @click="$emit('go-home')" class="mb-6 text-xs uppercase tracking-widest text-[var(--sd-muted)] hover:text-[var(--sd-gold)] transition">← Back to Collections</button>
     
-    <div class="bg-[var(--sd-surface)] p-8 border border-[var(--sd-border)] mb-8">
+    <!-- ADD/EDIT FORM (Background stays dark, ONLY border turns gold on hover) -->
+    <div class="bg-[var(--sd-surface)] border border-[var(--sd-border)] hover:border-[var(--sd-gold)] transition-colors duration-300 p-8 mb-8">
       <h3 class="sd-serif text-2xl mb-6">{{ editingCardId ? 'Modify Concept' : 'Add New Flashcard Element' }}</h3>
       <form @submit.prevent="saveCard" class="space-y-4">
         <input v-model="form.question" required class="sd-input" placeholder="Question or Code Snippet Front...">
@@ -25,14 +26,15 @@
     <!-- Active List -->
     <h4 class="sd-serif text-xl mb-4">Deck Catalog Structure ({{ deck.cards.length }})</h4>
     <div class="space-y-3">
-      <div v-for="card in deck.cards" :key="card.id" class="p-6 bg-[var(--sd-surface)] border border-[var(--sd-border)] flex justify-between items-center">
+      <!-- INDIVIDUAL CARDS (Keep the lighter background + border hover effect) -->
+      <div v-for="card in deck.cards" :key="card.id" class="sd-inner-card p-6 flex justify-between items-center">
         <div>
           <div class="text-sm font-semibold mb-1 text-[var(--sd-txt)]">{{ card.question }}</div>
           <div class="text-xs text-[var(--sd-muted)]">{{ card.topic }} · Tier: {{ card.difficulty }}</div>
         </div>
         <div class="flex gap-4 text-xs">
-          <button @click="startEdit(card)" class="text-[var(--sd-gold)] hover:underline">Modify</button>
-          <button @click="store.deleteCard(deck.id, card.id)" class="text-red-400 hover:underline">Remove</button>
+          <button @click="startEdit(card)" class="text-[var(--sd-gold)] hover:underline transition-colors">Modify</button>
+          <button @click="store.deleteCard(deck.id, card.id)" class="text-red-400 hover:text-red-300 hover:underline transition-colors">Remove</button>
         </div>
       </div>
     </div>
